@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pendaftaran UMKM · Dinas Kebudayaan Provinsi DKI Jakarta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#F5F8F4; --surface:#FFFFFF; --ink:#182623; --muted:#5B6B67; --line:#D5DED9;
+  --green:#0E5A4E; --green-soft:#E1EFE9; --red:#C32F27; --red-soft:#FBE7E4; --gold:#F0B429; --gold-soft:#FFF4D6;
+  --focus:#1565C0;
+  --display:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;
+  --body:'Instrument Sans','Segoe UI',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1A18; --surface:#16231F; --ink:#EAF1EE; --muted:#9FB1AB; --line:#2A3B36;
+    --green:#5CC4AE; --green-soft:#17352E; --red:#FF7B70; --red-soft:#3A1E1B; --gold:#F5C453; --gold-soft:#3A3012;
+    --focus:#7DB7FF;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1A18; --surface:#16231F; --ink:#EAF1EE; --muted:#9FB1AB; --line:#2A3B36;
+  --green:#5CC4AE; --green-soft:#17352E; --red:#FF7B70; --red-soft:#3A1E1B; --gold:#F5C453; --gold-soft:#3A3012;
+  --focus:#7DB7FF;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* Tumpal band */
+.tumpal{height:22px;background-color:var(--red);
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='44' height='22' viewBox='0 0 44 22'><polygon points='0,22 22,0 44,22' fill='%23F0B429'/><polygon points='9,22 22,8 35,22' fill='%230E5A4E'/></svg>");
+  background-size:44px 22px;background-repeat:repeat-x;background-position:bottom}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* Hero */
+header.hero{background:var(--green);color:#fff;padding:36px 0 30px}
+:root[data-theme="dark"] header.hero, :root:not([data-theme="light"]) header.hero{}
+.hero .org{font-size:.95rem;opacity:.9;margin:0 0 18px;max-width:46ch}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,6.2vw,4.2rem);line-height:1.02;margin:0 0 26px;letter-spacing:-.02em;max-width:14ch}
+.route{display:grid;grid-template-columns:1fr;gap:0;max-width:640px}
+.leg{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;position:relative;padding-bottom:18px}
+.leg:last-child{padding-bottom:0}
+.leg::before{content:"";position:absolute;left:11px;top:26px;bottom:-2px;width:2px;background:rgba(255,255,255,.4)}
+.leg:last-child::before{display:none}
+.dot{width:24px;height:24px;border-radius:50%;background:var(--gold);border:4px solid var(--green);box-shadow:0 0 0 2px var(--gold);margin-top:3px}
+.leg b{font-family:var(--display);font-size:1.35rem;font-weight:700;display:block;line-height:1.2}
+.leg span{opacity:.92}
+.tools{display:flex;gap:10px;justify-content:flex-end;padding:10px 0 0}
+.chipbtn{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:999px;padding:6px 14px;cursor:pointer;font-size:.88rem}
+.chipbtn:hover{background:rgba(255,255,255,.25)}
+.chipbtn[hidden]{display:none}
+
+/* Layout */
+main{padding:32px 0 80px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:32px;align-items:start}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+fieldset{border:0;margin:0 0 34px;padding:0;min-width:0}
+legend{padding:0;margin:0 0 4px;font-family:var(--display);font-weight:700;font-size:1.4rem;display:flex;gap:12px;align-items:baseline}
+legend .n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--green);color:var(--bg);font-size:.95rem;flex:none;transform:translateY(-2px)}
+:root[data-theme="dark"] legend .n{color:#0F1A18}
+.hint{color:var(--muted);margin:0 0 14px;font-size:.95rem}
+.opts{display:grid;gap:12px}
+.opts.three{grid-template-columns:repeat(3,1fr)}
+@media (max-width:760px){.opts.three{grid-template-columns:1fr}}
+.opt{position:relative;display:block;cursor:pointer}
+.opt input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.card{display:block;height:100%;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:16px 16px 14px;transition:border-color .15s,background .15s}
+.card strong{display:block;font-family:var(--display);font-size:1.15rem;line-height:1.25;margin-bottom:4px}
+.card small{display:block;color:var(--muted);font-size:.9rem;line-height:1.4}
+.opt:hover .card{border-color:var(--green)}
+.opt input:checked + .card{border-color:var(--green);background:var(--green-soft);box-shadow:inset 0 0 0 1px var(--green)}
+.opt input:focus-visible + .card{outline:3px solid var(--focus);outline-offset:2px}
+.card .tick{float:right;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);margin-left:8px;display:grid;place-items:center;font-size:.8rem;color:transparent}
+.opt input:checked + .card .tick{background:var(--green);border-color:var(--green);color:var(--surface)}
+.tags{display:flex;flex-wrap:wrap;gap:10px}
+.tag .card{padding:10px 18px;border-radius:999px;display:flex;gap:8px;align-items:center;height:auto}
+.tag .card strong{margin:0;font-family:var(--body);font-weight:600;font-size:1rem}
+.tag .card .tick{float:none;width:18px;height:18px;margin:0;border-radius:5px}
+.other{margin-top:14px}
+.field{display:block;margin-bottom:16px}
+.field > span{display:block;font-weight:600;margin-bottom:6px}
+.field > span i{font-style:normal;font-weight:400;color:var(--muted)}
+input[type=text],input[type=tel],input[type=email]{width:100%;background:var(--surface);border:2px solid var(--line);border-radius:10px;padding:12px 14px;min-height:48px}
+input[type=text]:hover,input[type=tel]:hover,input[type=email]:hover{border-color:var(--green)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+@media (max-width:640px){.two{grid-template-columns:1fr}}
+.err{color:var(--red);font-size:.9rem;margin:6px 0 0;min-height:0}
+.invalid{border-color:var(--red)!important}
+.section-err{background:var(--red-soft);color:var(--red);border-radius:8px;padding:8px 12px;margin-top:10px;font-weight:500;display:none}
+.section-err.show{display:block}
+
+/* Summary */
+aside .sum{position:sticky;top:calc(16px + env(safe-area-inset-top,0px));background:var(--surface);border:2px solid var(--line);border-radius:16px;overflow:hidden}
+@media (max-width:900px){aside .sum{position:static}}
+.sum h2{font-family:var(--display);font-size:1.15rem;margin:0;padding:16px 18px 12px}
+.sum dl{margin:0;padding:0 18px 4px}
+.sum dt{font-size:.85rem;color:var(--muted);margin-top:10px}
+.sum dd{margin:2px 0 0;font-weight:600}
+.sum dd.empty{color:var(--muted);font-weight:400}
+.fee{margin-top:14px;padding:14px 18px;background:var(--gold-soft);border-top:2px solid var(--line)}
+.fee .lbl{font-size:.85rem;color:var(--muted)}
+.fee .amt{font-family:var(--display);font-weight:800;font-size:1.7rem;line-height:1.2}
+.fee p{margin:6px 0 0;font-size:.85rem;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:14px 22px;min-height:50px;font-weight:600;font-size:1.05rem;cursor:pointer;background:var(--green);color:#fff;width:100%}
+:root[data-theme="dark"] .btn{color:#0F1A18}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn{color:#0F1A18}}
+.btn:hover{filter:brightness(1.1)}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line);width:auto}
+.btn.small{width:auto;min-height:40px;padding:8px 16px;font-size:.95rem}
+.sum .act{padding:14px 18px 18px}
+.note{font-size:.85rem;color:var(--muted);margin:10px 0 0}
+.banner{background:var(--gold-soft);border-left:5px solid var(--gold);padding:10px 14px;border-radius:8px;margin:0 0 24px;font-size:.95rem}
+
+/* Success */
+.done{background:var(--surface);border:2px solid var(--green);border-radius:18px;padding:28px;max-width:640px;margin:0 auto}
+.done h2{font-family:var(--display);font-size:1.8rem;margin:0 0 6px}
+.code{font-family:var(--display);font-weight:800;font-size:2rem;letter-spacing:.04em;background:var(--green-soft);color:var(--green);border-radius:12px;padding:10px 16px;display:inline-block;margin:10px 0 16px}
+.done dl{margin:0 0 18px}
+.done dt{font-size:.85rem;color:var(--muted);margin-top:10px}
+.done dd{margin:0;font-weight:600}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+
+/* Admin */
+#admin{display:none}
+#admin.on{display:block}
+.panel{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:20px;margin-bottom:24px}
+.panel h2{font-family:var(--display);margin:0 0 12px;font-size:1.3rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+.stat{background:var(--green-soft);border-radius:12px;padding:12px 14px}
+.stat b{display:block;font-family:var(--display);font-size:1.8rem;line-height:1.1}
+.stat span{font-size:.9rem;color:var(--muted)}
+.tablewrap{overflow-x:auto;max-width:100%}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:.92rem}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);white-space:nowrap}
+.fees input{min-height:40px;padding:6px 10px;width:130px}
+.fees th,.fees td{white-space:nowrap}
+.empty-state{padding:20px;color:var(--muted);text-align:center}
+.drop{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.pick{display:inline-flex;align-items:center;gap:8px;border:2px dashed var(--green);color:var(--green);border-radius:12px;padding:12px 18px;min-height:48px;cursor:pointer;font-weight:600;background:var(--surface)}
+.pick:hover{background:var(--green-soft)}
+.pick input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.pick:focus-within{outline:3px solid var(--focus);outline-offset:2px}
+.pick.off{opacity:.5;cursor:not-allowed}
+.thumbs{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.th{position:relative;width:120px;height:120px;border-radius:12px;overflow:hidden;border:2px solid var(--line);background:var(--surface)}
+.th img{width:100%;height:100%;object-fit:cover;display:block}
+.th button{position:absolute;top:4px;right:4px;width:30px;height:30px;border-radius:50%;border:0;background:rgba(0,0,0,.72);color:#fff;cursor:pointer;font-size:1.05rem;line-height:1}
+dialog{border:2px solid var(--line);border-radius:16px;background:var(--surface);color:var(--ink);padding:18px;max-width:min(92vw,720px)}
+dialog::backdrop{background:rgba(0,0,0,.55)}
+dialog img{max-width:100%;max-height:60vh;display:block;margin:0 auto 12px;border-radius:10px}
+footer{padding:0 0 30px;color:var(--muted);font-size:.88rem;text-align:center}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="org">Dinas Kebudayaan Provinsi DKI Jakarta</p>
+    <h1>Daftar jadi peserta UMKM</h1>
+    <div class="route" aria-label="Jadwal dan lokasi">
+      <div class="leg"><span class="dot" aria-hidden="true"></span><div><b>12–15 Desember</b><span>Kawasan UPK Kota Tua</span></div></div>
+      <div class="leg"><span class="dot" aria-hidden="true"></span><div><b>16–20 Desember</b><span>Pasar Hexagon</span></div></div>
+    </div>
+    <div class="tools">
+      <button class="chipbtn" id="adminBtn" type="button" hidden>Buka panel panitia</button>
+    </div>
+  </div>
+</header>
+<div class="tumpal" aria-hidden="true"></div>
+
+<main>
+<div class="wrap">
+
+  <!-- Panel panitia -->
+  <section id="admin" aria-label="Panel panitia">
+    <div class="stats" id="stats"></div>
+
+    <div class="panel">
+      <h2>Biaya pendaftaran</h2>
+      <p class="hint">Kosongkan kolom yang belum ditetapkan. Calon peserta akan melihat "Menyusul" untuk pilihan tersebut.</p>
+      <div class="tablewrap">
+        <table class="fees" id="feeTable"></table>
+      </div>
+      <p style="margin:14px 0 0"><button class="btn small" id="saveFees" type="button">Simpan biaya</button> <span id="feeMsg" class="note" role="status"></span></p>
+    </div>
+
+    <div class="panel">
+      <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h2 style="margin:0">Data pendaftar</h2>
+        <button class="btn small ghost" id="exportBtn" type="button">Unduh CSV</button>
+      </div>
+      <div class="tablewrap" id="regTable"></div>
+    </div>
+  </section>
+
+  <!-- Formulir -->
+  <div id="formView">
+    <div id="banner" class="banner" hidden></div>
+    <div class="grid">
+      <form id="form" novalidate onsubmit="return false">
+
+        <fieldset id="fs-cat">
+          <legend><span class="n">1</span>Kategori UMKM</legend>
+          <p class="hint">Pilih satu yang paling sesuai dengan usaha Anda.</p>
+          <div class="opts three" id="catOpts"></div>
+          <div class="section-err" id="e-cat">Pilih salah satu kategori.</div>
+        </fieldset>
+
+        <fieldset id="fs-prod">
+          <legend><span class="n">2</span>Yang dijual</legend>
+          <p class="hint">Boleh pilih lebih dari satu.</p>
+          <div class="tags" id="prodOpts"></div>
+          <div class="other" id="otherWrap" hidden>
+            <label class="field" style="margin:0">
+              <span>Sebutkan produk lainnya</span>
+              <input type="text" id="other" maxlength="120" placeholder="Contoh: tanaman hias, mainan edukasi" autocomplete="off">
+            </label>
+          </div>
+          <div class="section-err" id="e-prod">Pilih minimal satu jenis dagangan.</div>
+        </fieldset>
+
+        <fieldset id="fs-pkg">
+          <legend><span class="n">3</span>Lama hari dan lokasi</legend>
+          <p class="hint">Acara berlangsung 12–20 Desember di dua lokasi.</p>
+          <div class="opts three" id="pkgOpts"></div>
+          <div class="section-err" id="e-pkg">Pilih salah satu pilihan lama hari.</div>
+        </fieldset>
+
+        <fieldset id="fs-data">
+          <legend><span class="n">4</span>Data UMKM dan kontak</legend>
+          <p class="hint">Panitia akan menghubungi nomor ini untuk konfirmasi.</p>
+          <label class="field"><span>Nama UMKM</span>
+            <input type="text" id="nama" maxlength="100" autocomplete="organization" placeholder="Contoh: Kerak Telor Bang Dul">
+            <p class="err" id="e-nama"></p></label>
+          <div class="two">
+            <label class="field"><span>Nama kontak person</span>
+              <input type="text" id="kontak" maxlength="80" autocomplete="name">
+              <p class="err" id="e-kontak"></p></label>
+            <label class="field"><span>Nomor WhatsApp</span>
+              <input type="tel" id="hp" inputmode="tel" maxlength="20" autocomplete="tel" placeholder="08xxxxxxxxxx">
+              <p class="err" id="e-hp"></p></label>
+          </div>
+          <label class="field"><span>Email <i>(opsional)</i></span>
+            <input type="email" id="email" maxlength="100" autocomplete="email">
+            <p class="err" id="e-email"></p></label>
+          <label class="field"><span>NIB (Nomor Induk Berusaha) <i>(opsional)</i></span>
+            <input type="text" id="nib" inputmode="numeric" maxlength="20" placeholder="13 digit angka" autocomplete="off">
+            <p class="err" id="e-nib"></p></label>
+        </fieldset>
+
+        <fieldset id="fs-photo">
+          <legend><span class="n">5</span>Foto produk <span style="font-weight:500;color:var(--muted);font-size:1rem">(opsional)</span></legend>
+          <p class="hint">Unggah hingga 2 foto produk atau stan. Ukuran foto dikecilkan otomatis.</p>
+          <div class="drop">
+            <label class="pick" id="pickLbl"><input type="file" id="photoIn" accept="image/*" multiple><span>Pilih foto</span></label>
+            <span class="note" id="photoCount" style="margin:0">Belum ada foto</span>
+          </div>
+          <p class="err" id="e-photo"></p>
+          <div class="thumbs" id="thumbs"></div>
+        </fieldset>
+
+        <div id="mobileSubmit"></div>
+      </form>
+
+      <aside>
+        <div class="sum" id="sum" aria-live="polite">
+          <h2>Ringkasan pendaftaran</h2>
+          <dl>
+            <dt>Kategori</dt><dd id="s-cat" class="empty">Belum dipilih</dd>
+            <dt>Yang dijual</dt><dd id="s-prod" class="empty">Belum dipilih</dd>
+            <dt>Lama hari</dt><dd id="s-pkg" class="empty">Belum dipilih</dd>
+            <dt>UMKM</dt><dd id="s-nama" class="empty">Belum diisi</dd>
+            <dt>Kontak person</dt><dd id="s-kontak" class="empty">Belum diisi</dd>
+            <dt>NIB</dt><dd id="s-nib" class="empty">Tidak diisi</dd>
+            <dt>Foto produk</dt><dd id="s-foto" class="empty">Tidak ada</dd>
+          </dl>
+          <div class="fee">
+            <div class="lbl">Biaya pendaftaran</div>
+            <div class="amt" id="s-fee">—</div>
+            <p id="s-feeNote">Pilih kategori dan lama hari untuk melihat biaya.</p>
+          </div>
+          <div class="act">
+            <button class="btn" id="submitBtn" type="button">Kirim pendaftaran</button>
+            <p class="note" id="submitNote"></p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Sukses -->
+  <div id="doneView" hidden>
+    <div class="done" role="status">
+      <h2>Pendaftaran terkirim</h2>
+      <p style="margin:0">Simpan kode ini. Panitia akan menghubungi Anda lewat WhatsApp.</p>
+      <div class="code" id="d-code"></div>
+      <dl id="d-list"></dl>
+      <p class="note" id="d-note" style="margin:0 0 16px"></p>
+      <div class="row">
+        <button class="btn small" id="copyBtn" type="button">Salin data pendaftaran</button>
+        <button class="btn small ghost" id="againBtn" type="button">Daftarkan UMKM lain</button>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+<dialog id="photoDlg" aria-label="Foto produk"><div id="dlgBody"></div><button class="btn small" id="dlgClose" type="button">Tutup</button></dialog>
+<footer>Dinas Kebudayaan Provinsi DKI Jakarta · Desember 2026</footer>
+
+<script>
+(function(){
+"use strict";
+
+var CATS=[
+  {id:"betawi",label:"UMKM Betawi",desc:"Usaha dengan produk atau karya khas budaya Betawi."},
+  {id:"nusantara",label:"UMKM Nusantara",desc:"Usaha dengan produk khas daerah lain di Indonesia."},
+  {id:"nonnusantara",label:"UMKM Non Nusantara",desc:"Usaha dengan produk di luar kekhasan Nusantara."}
+];
+var PKGS=[
+  {id:"full",label:"12–20 Desember",desc:"Kota Tua (12–15) lalu Pasar Hexagon (16–20). Total 9 hari."},
+  {id:"kt",label:"12–15 Desember",desc:"Kawasan UPK Kota Tua saja. 4 hari."},
+  {id:"ph",label:"16–20 Desember",desc:"Pasar Hexagon saja. 5 hari."}
+];
+var PRODS=["Makanan","Minuman","Souvenir","Pakaian","Jasa","Lainnya"];
+
+var S={cat:"",pkg:"",prods:[],other:"",nama:"",kontak:"",hp:"",email:"",nib:"",photos:[]};
+var db=null,uid=null,isAdmin=false,fees=null,regs=[],lastRecord=null,saving=false;
+
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function catLabel(id){var c=CATS.filter(function(x){return x.id===id})[0];return c?c.label:"-"}
+function pkgLabel(id){var c=PKGS.filter(function(x){return x.id===id})[0];return c?c.label:"-"}
+function pkgFull(id){var c=PKGS.filter(function(x){return x.id===id})[0];return c?(c.label+" · "+(id==="full"?"Kota Tua lalu Pasar Hexagon":id==="kt"?"Kawasan UPK Kota Tua":"Pasar Hexagon")):"-"}
+function rp(n){return "Rp "+Number(n).toLocaleString("id-ID")}
+function emptyFees(){var f={};CATS.forEach(function(c){f[c.id]={};PKGS.forEach(function(p){f[c.id][p.id]=null})});return f}
+fees=emptyFees();
+function feeFor(cat,pkg){if(!cat||!pkg)return undefined;var v=fees[cat]&&fees[cat][pkg];return (typeof v==="number")?v:null}
+function prodList(){return S.prods.map(function(p){return p==="Lainnya"?("Lainnya: "+(S.other.trim()||"…")):p})}
+function snapData(d){return (d&&typeof d.data==="function")?d.data():(d&&d.data)||{}}
+
+/* ---- build option cards ---- */
+function buildRadios(el,name,items){
+  el.innerHTML=items.map(function(it){
+    return '<label class="opt"><input type="radio" name="'+name+'" value="'+it.id+'"><span class="card"><span class="tick" aria-hidden="true">✓</span><strong>'+esc(it.label)+'</strong><small>'+esc(it.desc)+'</small></span></label>';
+  }).join("");
+}
+buildRadios($("catOpts"),"cat",CATS);
+buildRadios($("pkgOpts"),"pkg",PKGS);
+$("prodOpts").innerHTML=PRODS.map(function(p){
+  return '<label class="opt tag"><input type="checkbox" name="prod" value="'+p+'"><span class="card"><span class="tick" aria-hidden="true">✓</span><strong>'+p+'</strong></span></label>';
+}).join("");
+
+/* ---- events ---- */
+document.addEventListener("change",function(e){
+  var t=e.target;
+  if(t.name==="cat"){S.cat=t.value;hideErr("e-cat")}
+  else if(t.name==="pkg"){S.pkg=t.value;hideErr("e-pkg")}
+  else if(t.name==="prod"){
+    S.prods=[].slice.call(document.querySelectorAll('input[name=prod]:checked')).map(function(i){return i.value});
+    var hasOther=S.prods.indexOf("Lainnya")>-1;
+    $("otherWrap").hidden=!hasOther;
+    if(hasOther)$("other").focus();
+    if(S.prods.length)hideErr("e-prod");
+  } else return;
+  update();
+});
+["other","nama","kontak","hp","email","nib"].forEach(function(id){
+  $(id).addEventListener("input",function(){S[id]=this.value;this.classList.remove("invalid");var er=$("e-"+id);if(er)er.textContent="";update()});
+});
+function hideErr(id){$(id).classList.remove("show")}
+function showErr(id){$(id).classList.add("show")}
+
+/* ---- summary ---- */
+function setDD(id,txt,empty){var el=$(id);el.textContent=txt;el.className=empty?"empty":""}
+function update(){
+  setDD("s-nib",S.nib.trim()||"Tidak diisi",!S.nib.trim());
+  setDD("s-foto",S.photos.length?(S.photos.length+" foto"):"Tidak ada",!S.photos.length);
+  setDD("s-cat",S.cat?catLabel(S.cat):"Belum dipilih",!S.cat);
+  setDD("s-prod",S.prods.length?prodList().join(", "):"Belum dipilih",!S.prods.length);
+  setDD("s-pkg",S.pkg?pkgFull(S.pkg):"Belum dipilih",!S.pkg);
+  setDD("s-nama",S.nama.trim()||"Belum diisi",!S.nama.trim());
+  setDD("s-kontak",S.kontak.trim()?(S.kontak.trim()+(S.hp.trim()?" · "+S.hp.trim():"")):"Belum diisi",!S.kontak.trim());
+  var f=feeFor(S.cat,S.pkg);
+  if(f===undefined){$("s-fee").textContent="—";$("s-feeNote").textContent="Pilih kategori dan lama hari untuk melihat biaya."}
+  else if(f===null){$("s-fee").textContent="Menyusul";$("s-feeNote").textContent="Biaya untuk pilihan ini belum ditetapkan. Panitia akan menginformasikannya setelah Anda mendaftar."}
+  else if(f===0){$("s-fee").textContent="Gratis";$("s-feeNote").textContent="Tidak ada biaya untuk pilihan ini."}
+  else{$("s-fee").textContent=rp(f);$("s-feeNote").textContent="Tata cara pembayaran akan disampaikan panitia."}
+}
+
+/* ---- validation + submit ---- */
+function validate(){
+  var ok=true,first=null;
+  function bad(secId,errId,msg){ok=false;if(msg)$(errId).textContent=msg;else showErr(errId);if(!first)first=$(secId)}
+  if(!S.cat)bad("fs-cat","e-cat");
+  if(!S.prods.length)bad("fs-prod","e-prod");
+  else if(S.prods.indexOf("Lainnya")>-1&&!S.other.trim()){ok=false;$("other").classList.add("invalid");if(!first)first=$("other")}
+  if(!S.pkg)bad("fs-pkg","e-pkg");
+  if(!S.nama.trim()){bad("fs-data","e-nama","Isi nama UMKM.");$("nama").classList.add("invalid")}
+  if(!S.kontak.trim()){bad("fs-data","e-kontak","Isi nama kontak person.");$("kontak").classList.add("invalid")}
+  var digits=S.hp.replace(/[\s\-+()]/g,"");
+  if(!/^\d{9,14}$/.test(digits)){bad("fs-data","e-hp","Isi nomor WhatsApp yang valid, 9–14 angka.");$("hp").classList.add("invalid")}
+  if(S.email.trim()&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(S.email.trim())){bad("fs-data","e-email","Format email belum benar.");$("email").classList.add("invalid")}
+  var nd=S.nib.replace(/\D/g,"");
+  if(S.nib.trim()&&nd.length!==13){bad("fs-data","e-nib","NIB terdiri dari 13 angka. Kosongkan jika belum punya.");$("nib").classList.add("invalid")}
+  if(!ok&&first)first.scrollIntoView({behavior:"smooth",block:"center"});
+  return ok;
+}
+function newCode(){var a="ABCDEFGHJKLMNPQRSTUVWXYZ23456789",s="";for(var i=0;i<5;i++)s+=a[Math.floor(Math.random()*a.length)];return "UMKM-"+s}
+
+function summaryText(r){
+  var f=r.biaya;
+  return ["PENDAFTARAN UMKM · Dinas Kebudayaan Provinsi DKI Jakarta","Kode: "+r.kode,"Kategori: "+catLabel(r.kategori),"Yang dijual: "+r.produk.join(", "),"Lama hari: "+pkgFull(r.paket),"Nama UMKM: "+r.namaUmkm,"Kontak person: "+r.kontak+" ("+r.hp+")","Email: "+(r.email||"-"),"NIB: "+(r.nib||"-"),"Foto produk: "+(r.fotoCount||0)+" file","Biaya: "+(typeof f==="number"?rp(f):"Menyusul")].join("\n");
+}
+
+$("submitBtn").addEventListener("click",async function(){
+  if(saving||!validate())return;
+  saving=true;var btn=this;btn.disabled=true;btn.textContent="Mengirim…";$("submitNote").textContent="";
+  var f=feeFor(S.cat,S.pkg);
+  var rec={kode:newCode(),kategori:S.cat,paket:S.pkg,produk:prodList(),namaUmkm:S.nama.trim(),kontak:S.kontak.trim(),hp:S.hp.trim(),email:S.email.trim(),nib:S.nib.replace(/\D/g,""),uid:uid||"",fotoCount:S.photos.length,biaya:(typeof f==="number")?f:null,createdAt:Date.now(),status:"baru"};
+  var stored=false,photoFail=false;
+  if(db){
+    try{
+      if(!uid)throw new Error("no-user");
+      var ref=db.doc("registrations/"+uid),cur=await ref.get(),ent={};ent[rec.kode]=rec;
+      if(cur&&cur.exists)await ref.update({entries:ent});else await ref.set({entries:ent});
+      stored=true;
+      if(S.photos.length){
+        try{await db.doc("registrations/"+uid+"/photos/"+rec.kode).set({kode:rec.kode,images:S.photos.slice()})}
+        catch(pe){rec.fotoCount=0;try{var e2={};e2[rec.kode]={fotoCount:0};await ref.update({entries:e2})}catch(_){}photoFail=true}
+      }
+    }catch(e){stored=false}
+  }
+  saving=false;btn.disabled=false;btn.textContent="Kirim pendaftaran";
+  if(!stored){
+    $("submitNote").textContent="Pengiriman online belum tersedia di tampilan ini. Anda tetap bisa melihat dan menyalin data pendaftaran untuk dikirim ke panitia.";
+  }
+  lastRecord=rec;showDone(rec,stored);if(photoFail)$("d-note").textContent="Pendaftaran tersimpan, tetapi foto produk gagal terunggah. Kirim foto langsung ke panitia lewat WhatsApp.";
+});
+
+function showDone(r,stored){
+  $("d-code").textContent=r.kode;
+  var rows=[["Kategori",catLabel(r.kategori)],["Yang dijual",r.produk.join(", ")],["Lama hari",pkgFull(r.paket)],["Nama UMKM",r.namaUmkm],["Kontak person",r.kontak+" · "+r.hp],["NIB",r.nib||"Tidak diisi"],["Foto produk",r.fotoCount?r.fotoCount+" foto":"Tidak ada"],["Biaya",typeof r.biaya==="number"?rp(r.biaya):"Menyusul, akan diinformasikan panitia"]];
+  $("d-list").innerHTML=rows.map(function(x){return "<dt>"+esc(x[0])+"</dt><dd>"+esc(x[1])+"</dd>"}).join("");
+  $("d-note").textContent=stored?"":"Data ini belum tersimpan di sistem panitia. Salin lalu kirim ke panitia agar pendaftaran tercatat.";
+  $("formView").hidden=true;$("doneView").hidden=false;window.scrollTo({top:0,behavior:"smooth"});
+}
+$("copyBtn").addEventListener("click",async function(){
+  var t=summaryText(lastRecord),b=this;
+  try{await navigator.clipboard.writeText(t);b.textContent="Tersalin"}catch(e){
+    var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");b.textContent="Tersalin"}catch(_){b.textContent="Gagal menyalin"}document.body.removeChild(ta)}
+  setTimeout(function(){b.textContent="Salin data pendaftaran"},2000);
+});
+$("againBtn").addEventListener("click",function(){
+  S={cat:"",pkg:"",prods:[],other:"",nama:"",kontak:"",hp:"",email:"",nib:"",photos:[]};renderPhotos();
+  document.querySelectorAll("#form input").forEach(function(i){if(i.type==="radio"||i.type==="checkbox")i.checked=false;else i.value=""});
+  $("otherWrap").hidden=true;$("submitNote").textContent="";
+  $("doneView").hidden=true;$("formView").hidden=false;update();window.scrollTo({top:0,behavior:"smooth"});
+});
+
+/* ---- admin ---- */
+function renderFeeTable(){
+  var h='<thead><tr><th>Kategori</th>'+PKGS.map(function(p){return '<th>'+esc(p.label)+'</th>'}).join("")+'</tr></thead><tbody>';
+  CATS.forEach(function(c){
+    h+='<tr><td><b>'+esc(c.label)+'</b></td>'+PKGS.map(function(p){
+      var v=fees[c.id][p.id];
+      return '<td><input type="text" inputmode="numeric" data-c="'+c.id+'" data-p="'+p.id+'" value="'+(typeof v==="number"?v:"")+'" placeholder="Menyusul" aria-label="Biaya '+esc(c.label)+' '+esc(p.label)+' dalam Rupiah"></td>';
+    }).join("")+'</tr>';
+  });
+  $("feeTable").innerHTML=h+'</tbody>';
+}
+$("saveFees").addEventListener("click",async function(){
+  var nf=emptyFees();
+  document.querySelectorAll("#feeTable input").forEach(function(i){
+    var raw=i.value.replace(/\D/g,"");nf[i.dataset.c][i.dataset.p]=raw===""?null:parseInt(raw,10);
+  });
+  var m=$("feeMsg");
+  try{await db.doc("config/fees").set({fees:nf,updatedAt:Date.now()});fees=nf;m.textContent="Biaya tersimpan.";update()}
+  catch(e){m.textContent="Biaya belum tersimpan. Coba lagi."}
+  setTimeout(function(){m.textContent=""},3000);
+});
+function renderRegs(){
+  var n=regs.length,c={betawi:0,nusantara:0,nonnusantara:0};
+  regs.forEach(function(r){if(c[r.kategori]!=null)c[r.kategori]++});
+  $("stats").innerHTML='<div class="stat"><b>'+n+'</b><span>Total pendaftar</span></div>'+CATS.map(function(x){return '<div class="stat"><b>'+c[x.id]+'</b><span>'+esc(x.label)+'</span></div>'}).join("");
+  if(!n){$("regTable").innerHTML='<div class="empty-state">Belum ada pendaftar.</div>';return}
+  var h='<table><thead><tr><th>Kode</th><th>Waktu</th><th>UMKM</th><th>Kategori</th><th>Dijual</th><th>Lama hari</th><th>Kontak</th><th>NIB</th><th>Foto</th><th>Biaya</th></tr></thead><tbody>';
+  regs.forEach(function(r){
+    var d=new Date(r.createdAt||0).toLocaleString("id-ID",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});
+    h+='<tr><td>'+esc(r.kode)+'</td><td>'+esc(d)+'</td><td><b>'+esc(r.namaUmkm)+'</b></td><td>'+esc(catLabel(r.kategori))+'</td><td>'+esc((r.produk||[]).join(", "))+'</td><td>'+esc(pkgLabel(r.paket))+'</td><td>'+esc(r.kontak)+'<br>'+esc(r.hp)+(r.email?'<br>'+esc(r.email):'')+'</td><td>'+esc(r.nib||"-")+'</td><td>'+(r.fotoCount&&r.uid?'<button class="btn small ghost" type="button" data-photo="'+esc(r.uid)+'|'+esc(r.kode)+'">Lihat ('+r.fotoCount+')</button>':'-')+'</td><td>'+(typeof r.biaya==="number"?esc(rp(r.biaya)):'Menyusul')+'</td></tr>';
+  });
+  $("regTable").innerHTML=h+'</tbody></table>';
+}
+$("exportBtn").addEventListener("click",async function(){
+  if(!regs.length)return;
+  var q=function(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"'};
+  var head=["Kode","Waktu","Nama UMKM","Kategori","Yang dijual","Lama hari","Kontak person","WhatsApp","Email","NIB","Jumlah foto","Biaya"];
+  var lines=[head.map(q).join(",")].concat(regs.map(function(r){
+    return [r.kode,new Date(r.createdAt||0).toISOString(),r.namaUmkm,catLabel(r.kategori),(r.produk||[]).join("; "),pkgLabel(r.paket),r.kontak,r.hp,r.email,r.nib||"",r.fotoCount||0,typeof r.biaya==="number"?r.biaya:"Menyusul"].map(q).join(",");
+  }));
+  try{var dl=await claude.use("downloads");if(dl)await dl.save({filename:"pendaftar-umkm.csv",data:"\ufeff"+lines.join("\r\n")})}catch(e){}
+});
+$("adminBtn").addEventListener("click",function(){
+  var on=$("admin").classList.toggle("on");
+  this.textContent=on?"Tutup panel panitia":"Buka panel panitia";
+  if(on)$("admin").scrollIntoView({behavior:"smooth",block:"start"});
+});
+
+/* ---- photos ---- */
+var MAXP=2,MAXCH=90000;
+function loadImg(file){return new Promise(function(res,rej){var u=URL.createObjectURL(file),im=new Image();im.onload=function(){URL.revokeObjectURL(u);res(im)};im.onerror=function(){URL.revokeObjectURL(u);rej(new Error("img"))};im.src=u})}
+async function shrink(file){
+  var im=await loadImg(file),sc=Math.min(1,720/Math.max(im.width,im.height)),w=Math.max(1,Math.round(im.width*sc)),h=Math.max(1,Math.round(im.height*sc)),q=.75,d="",c=document.createElement("canvas"),n=0;
+  do{
+    c.width=w;c.height=h;var x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,w,h);x.drawImage(im,0,0,w,h);d=c.toDataURL("image/jpeg",q);n++;
+    if(d.length>MAXCH){if(q>.45)q-=.1;else{w=Math.round(w*.8);h=Math.round(h*.8)}}
+  }while(d.length>MAXCH&&n<10);
+  if(d.length>MAXCH)throw new Error("big");
+  return d;
+}
+function renderPhotos(){
+  $("thumbs").innerHTML=S.photos.map(function(d,i){return '<div class="th"><img src="'+d+'" alt="Foto produk '+(i+1)+'"><button type="button" data-rm="'+i+'" aria-label="Hapus foto '+(i+1)+'">×</button></div>'}).join("");
+  $("photoCount").textContent=S.photos.length?(S.photos.length+" dari "+MAXP+" foto"):"Belum ada foto";
+  $("pickLbl").classList.toggle("off",S.photos.length>=MAXP);
+  $("photoIn").disabled=S.photos.length>=MAXP;
+  update();
+}
+$("photoIn").addEventListener("change",async function(){
+  var files=[].slice.call(this.files||[]),er=$("e-photo");er.textContent="";
+  for(var i=0;i<files.length&&S.photos.length<MAXP;i++){
+    var f=files[i];
+    if(!/^image\//.test(f.type)){er.textContent="Hanya file gambar yang bisa diunggah.";continue}
+    if(f.size>15*1024*1024){er.textContent="Satu foto maksimal 15 MB.";continue}
+    try{S.photos.push(await shrink(f))}catch(e){er.textContent="Foto tidak bisa diproses. Coba foto lain."}
+  }
+  this.value="";renderPhotos();
+});
+$("thumbs").addEventListener("click",function(e){var b=e.target.closest("[data-rm]");if(b){S.photos.splice(+b.dataset.rm,1);renderPhotos()}});
+document.addEventListener("click",async function(e){
+  var b=e.target.closest("[data-photo]");if(!b||!db)return;
+  var parts=b.dataset.photo.split("|"),dlg=$("photoDlg"),body=$("dlgBody");
+  body.innerHTML='<p>Memuat foto…</p>';if(!dlg.open)dlg.showModal();
+  try{
+    var snap=await db.doc("registrations/"+parts[0]+"/photos/"+parts[1]).get(),d=snapData(snap),im=d.images||[];
+    body.innerHTML=im.length?im.map(function(u,i){return '<img src="'+esc(u)+'" alt="Foto produk '+(i+1)+' dari '+esc(parts[1])+'">'}).join(""):'<p>Foto tidak ditemukan.</p>';
+  }catch(err){body.innerHTML='<p>Foto tidak bisa dimuat.</p>'}
+});
+$("dlgClose").addEventListener("click",function(){$("photoDlg").close()});
+
+/* ---- init capabilities ---- */
+async function init(){
+  update();
+  if(!(window.claude&&claude.use)){showBanner("Formulir ini belum terhubung ke penyimpanan data panitia. Setelah mengisi, salin data pendaftaran lalu kirim ke panitia.");return}
+  try{var u=await claude.use("user");if(u){isAdmin=!!(await u.canEdit());try{uid=await u.id()}catch(_){}}}catch(e){}
+  try{db=await claude.use("db")}catch(e){db=null}
+  if(!db){showBanner("Anda belum masuk. Formulir tetap bisa diisi, dan data dapat disalin untuk dikirim ke panitia.");return}
+  try{
+    db.doc("config/fees").onSnapshot(function(s){
+      var d=snapData(s);var nf=emptyFees();
+      if(d.fees)CATS.forEach(function(c){PKGS.forEach(function(p){var v=d.fees[c.id]&&d.fees[c.id][p.id];if(typeof v==="number")nf[c.id][p.id]=v})});
+      fees=nf;update();
+      if(isAdmin&&!document.activeElement.closest("#feeTable"))renderFeeTable();
+    },function(){});
+  }catch(e){}
+  if(isAdmin){
+    $("adminBtn").hidden=false;renderFeeTable();renderRegs();
+    try{
+      db.collection("registrations").onSnapshot(function(snap){
+        var all=[];
+        snap.docs.forEach(function(d){var e=snapData(d).entries||{};Object.keys(e).forEach(function(k){all.push(e[k])})});
+        all.sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0)});
+        regs=all;renderRegs();
+      },function(){});
+    }catch(e){}
+  }
+}
+function showBanner(t){var b=$("banner");b.textContent=t;b.hidden=false}
+init();
+})();
+</script>
+</body>
+</html>
