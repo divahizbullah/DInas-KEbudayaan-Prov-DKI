@@ -187,6 +187,9 @@ dialog dt{font-size:.85rem;color:var(--muted);margin-top:10px}
 dialog dd{margin:0;font-weight:600;overflow-wrap:anywhere}
 .dphotos{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
 .dphotos img{max-width:100%;width:260px;border-radius:10px;margin:0}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.toolbar input[type=search],.toolbar select{min-height:44px;border:2px solid var(--line);border-radius:10px;background:var(--surface);padding:8px 12px}
+.toolbar input[type=search]{flex:1 1 220px;min-width:0}
 footer{padding:0 0 30px;color:var(--muted);font-size:.88rem;text-align:center}
 </style>
 </head>
@@ -200,23 +203,7 @@ footer{padding:0 0 30px;color:var(--muted);font-size:.88rem;text-align:center}
       <div class="leg"><span class="dot" aria-hidden="true"></span><div><b>12–15 Desember</b><span>Kawasan UPK Kota Tua</span></div></div>
       <div class="leg"><span class="dot" aria-hidden="true"></span><div><b>16–20 Desember</b><span>Pasar Hexagon</span></div></div>
     </div>
-    <div class="tools">
-      <button class="chipbtn" id="loginBtn" type="button">Login panitia</button>
-      <div class="admintools" id="adminTools" hidden>
-        <div class="bellwrap">
-          <button class="bell" id="bellBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="notif" aria-label="Notifikasi pendaftar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-            <span class="badge" id="badge" hidden>0</span>
-          </button>
-          <div class="notif" id="notif" hidden role="region" aria-label="Pendaftar terbaru">
-            <header><b>Pendaftar terbaru</b><button class="linkbtn" id="markRead" type="button">Tandai sudah dibaca</button></header>
-            <div id="notifList"></div>
-          </div>
-        </div>
-        <button class="chipbtn" id="adminBtn" type="button">Buka panel panitia</button>
-        <button class="chipbtn" id="logoutBtn" type="button">Keluar</button>
-      </div>
-    </div>
+    <div class="tools"><button class="chipbtn" id="adminBtn" type="button" hidden>Administrasi</button></div>
   </div>
 </header>
 <div class="tumpal" aria-hidden="true"></div>
@@ -224,25 +211,27 @@ footer{padding:0 0 30px;color:var(--muted);font-size:.88rem;text-align:center}
 <main>
 <div class="wrap">
 
-  <!-- Panel panitia -->
-  <section id="admin" aria-label="Panel panitia">
+  <!-- Administrasi (hanya terlihat oleh panitia: Editor atau pemilik halaman) -->
+  <section id="admin" aria-label="Administrasi panitia">
     <div class="stats" id="stats"></div>
+
+    <div class="panel">
+      <h2>Data pendaftar</h2>
+      <div class="toolbar">
+        <input type="search" id="fQ" placeholder="Cari nama UMKM, kontak, kode, atau NIB" aria-label="Cari pendaftar">
+        <select id="fCat" aria-label="Filter kategori"></select>
+        <select id="fPkg" aria-label="Filter lama hari"></select>
+        <button class="btn small ghost" id="exportBtn" type="button">Unduh CSV</button>
+      </div>
+      <p class="note" id="regCount" style="margin:0 0 10px" role="status"></p>
+      <div class="tablewrap" id="regTable"><div class="empty-state">Memuat data…</div></div>
+    </div>
 
     <div class="panel">
       <h2>Biaya pendaftaran</h2>
       <p class="hint">Kosongkan kolom yang belum ditetapkan. Calon peserta akan melihat "Menyusul" untuk pilihan tersebut.</p>
-      <div class="tablewrap">
-        <table class="fees" id="feeTable"></table>
-      </div>
+      <div class="tablewrap"><table class="fees" id="feeTable"></table></div>
       <p style="margin:14px 0 0"><button class="btn small" id="saveFees" type="button">Simpan biaya</button> <span id="feeMsg" class="note" role="status"></span></p>
-    </div>
-
-    <div class="panel">
-      <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:12px">
-        <h2 style="margin:0">Data pendaftar</h2>
-        <button class="btn small ghost" id="exportBtn" type="button">Unduh CSV</button>
-      </div>
-      <div class="tablewrap" id="regTable"></div>
     </div>
   </section>
 
@@ -357,15 +346,7 @@ footer{padding:0 0 30px;color:var(--muted);font-size:.88rem;text-align:center}
   </div>
 </div>
 </main>
-<dialog id="photoDlg" aria-label="Foto produk"><div id="dlgBody"></div><button class="btn small" id="dlgClose" type="button">Tutup</button></dialog>
-<dialog id="loginDlg" aria-labelledby="loginTitle">
-  <h2 id="loginTitle">Login panitia</h2>
-  <p style="margin:0 0 12px;max-width:44ch">Masuk memakai akun Claude Anda. Hanya akun yang ditambahkan sebagai Editor atau pemilik halaman yang bisa membuka data pendaftar.</p>
-  <p class="err" id="loginMsg" role="status" style="min-height:1.4em"></p>
-  <div class="row"><button class="btn small" id="loginGo" type="button">Masuk sebagai panitia</button><button class="btn small ghost" id="loginCancel" type="button">Batal</button></div>
-</dialog>
 <dialog id="detailDlg" aria-label="Detail pendaftar"><div id="detailBody"></div><button class="btn small" id="detailClose" type="button">Tutup</button></dialog>
-<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 <footer>Dinas Kebudayaan Provinsi DKI Jakarta · Desember 2026</footer>
 
 <script>
@@ -385,7 +366,7 @@ var PKGS=[
 var PRODS=["Makanan","Minuman","Souvenir","Pakaian","Jasa","Lainnya"];
 
 var S={cat:"",pkg:"",prods:[],other:"",nama:"",kontak:"",hp:"",email:"",nib:"",photos:[]};
-var db=null,uid=null,isAdmin=false,fees=null,regs=[],lastRecord=null,saving=false;
+var db=null,uid=null,fees=null,lastRecord=null,saving=false;
 
 function $(id){return document.getElementById(id)}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
@@ -518,54 +499,6 @@ $("againBtn").addEventListener("click",function(){
   $("doneView").hidden=true;$("formView").hidden=false;update();window.scrollTo({top:0,behavior:"smooth"});
 });
 
-/* ---- admin ---- */
-function renderFeeTable(){
-  var h='<thead><tr><th>Kategori</th>'+PKGS.map(function(p){return '<th>'+esc(p.label)+'</th>'}).join("")+'</tr></thead><tbody>';
-  CATS.forEach(function(c){
-    h+='<tr><td><b>'+esc(c.label)+'</b></td>'+PKGS.map(function(p){
-      var v=fees[c.id][p.id];
-      return '<td><input type="text" inputmode="numeric" data-c="'+c.id+'" data-p="'+p.id+'" value="'+(typeof v==="number"?v:"")+'" placeholder="Menyusul" aria-label="Biaya '+esc(c.label)+' '+esc(p.label)+' dalam Rupiah"></td>';
-    }).join("")+'</tr>';
-  });
-  $("feeTable").innerHTML=h+'</tbody>';
-}
-$("saveFees").addEventListener("click",async function(){
-  var nf=emptyFees();
-  document.querySelectorAll("#feeTable input").forEach(function(i){
-    var raw=i.value.replace(/\D/g,"");nf[i.dataset.c][i.dataset.p]=raw===""?null:parseInt(raw,10);
-  });
-  var m=$("feeMsg");
-  try{await db.doc("config/fees").set({fees:nf,updatedAt:Date.now()});fees=nf;m.textContent="Biaya tersimpan.";update()}
-  catch(e){m.textContent="Biaya belum tersimpan. Coba lagi."}
-  setTimeout(function(){m.textContent=""},3000);
-});
-function renderRegs(){
-  var n=regs.length,c={betawi:0,nusantara:0,nonnusantara:0};
-  regs.forEach(function(r){if(c[r.kategori]!=null)c[r.kategori]++});
-  $("stats").innerHTML='<div class="stat"><b>'+n+'</b><span>Total pendaftar</span></div>'+CATS.map(function(x){return '<div class="stat"><b>'+c[x.id]+'</b><span>'+esc(x.label)+'</span></div>'}).join("");
-  if(!n){$("regTable").innerHTML='<div class="empty-state">Belum ada pendaftar.</div>';return}
-  var h='<table><thead><tr><th>Kode</th><th>Waktu</th><th>UMKM</th><th>Kategori</th><th>Dijual</th><th>Lama hari</th><th>Kontak</th><th>NIB</th><th>Foto</th><th>Biaya</th></tr></thead><tbody>';
-  regs.forEach(function(r){
-    var d=new Date(r.createdAt||0).toLocaleString("id-ID",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});
-    h+='<tr><td>'+esc(r.kode)+'</td><td>'+esc(d)+'</td><td><button class="linkbtn" type="button" data-detail="'+esc(r.kode)+'">'+esc(r.namaUmkm)+'</button>'+((r.createdAt||0)>lastSeen?' <span class="pill">Baru</span>':'')+'</td><td>'+esc(catLabel(r.kategori))+'</td><td>'+esc((r.produk||[]).join(", "))+'</td><td>'+esc(pkgLabel(r.paket))+'</td><td>'+esc(r.kontak)+'<br>'+esc(r.hp)+(r.email?'<br>'+esc(r.email):'')+'</td><td>'+esc(r.nib||"-")+'</td><td>'+(r.fotoCount&&r.uid?'<button class="btn small ghost" type="button" data-photo="'+esc(r.uid)+'|'+esc(r.kode)+'">Lihat ('+r.fotoCount+')</button>':'-')+'</td><td>'+(typeof r.biaya==="number"?esc(rp(r.biaya)):'Menyusul')+'</td></tr>';
-  });
-  $("regTable").innerHTML=h+'</tbody></table>';
-}
-$("exportBtn").addEventListener("click",async function(){
-  if(!regs.length)return;
-  var q=function(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"'};
-  var head=["Kode","Waktu","Nama UMKM","Kategori","Yang dijual","Lama hari","Kontak person","WhatsApp","Email","NIB","Jumlah foto","Biaya"];
-  var lines=[head.map(q).join(",")].concat(regs.map(function(r){
-    return [r.kode,new Date(r.createdAt||0).toISOString(),r.namaUmkm,catLabel(r.kategori),(r.produk||[]).join("; "),pkgLabel(r.paket),r.kontak,r.hp,r.email,r.nib||"",r.fotoCount||0,typeof r.biaya==="number"?r.biaya:"Menyusul"].map(q).join(",");
-  }));
-  try{var dl=await claude.use("downloads");if(dl)await dl.save({filename:"pendaftar-umkm.csv",data:"\ufeff"+lines.join("\r\n")})}catch(e){}
-});
-$("adminBtn").addEventListener("click",function(){
-  var on=$("admin").classList.toggle("on");
-  this.textContent=on?"Tutup panel panitia":"Buka panel panitia";
-  if(on)$("admin").scrollIntoView({behavior:"smooth",block:"start"});
-});
-
 /* ---- photos ---- */
 var MAXP=2,MAXCH=90000;
 function loadImg(file){return new Promise(function(res,rej){var u=URL.createObjectURL(file),im=new Image();im.onload=function(){URL.revokeObjectURL(u);res(im)};im.onerror=function(){URL.revokeObjectURL(u);rej(new Error("img"))};im.src=u})}
@@ -596,100 +529,95 @@ $("photoIn").addEventListener("change",async function(){
   this.value="";renderPhotos();
 });
 $("thumbs").addEventListener("click",function(e){var b=e.target.closest("[data-rm]");if(b){S.photos.splice(+b.dataset.rm,1);renderPhotos()}});
-document.addEventListener("click",async function(e){
-  var b=e.target.closest("[data-photo]");if(!b||!db)return;
-  var parts=b.dataset.photo.split("|"),dlg=$("photoDlg"),body=$("dlgBody");
-  body.innerHTML='<p>Memuat foto…</p>';if(!dlg.open)dlg.showModal();
-  try{
-    var snap=await db.doc("registrations/"+parts[0]+"/photos/"+parts[1]).get(),d=snapData(snap),im=d.images||[];
-    body.innerHTML=im.length?im.map(function(u,i){return '<img src="'+esc(u)+'" alt="Foto produk '+(i+1)+' dari '+esc(parts[1])+'">'}).join(""):'<p>Foto tidak ditemukan.</p>';
-  }catch(err){body.innerHTML='<p>Foto tidak bisa dimuat.</p>'}
-});
-$("dlgClose").addEventListener("click",function(){$("photoDlg").close()});
-
-/* ---- login panitia + notifikasi ---- */
-var adminActive=false,unsub=null,lastSeen=0,firstSnap=true,toastT=null;
-function fmtTime(t){return new Date(t||0).toLocaleString("id-ID",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"})}
-function toast(msg){var t=$("toast");t.textContent=msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(function(){t.hidden=true},4500)}
-function setAdminUI(on){
-  adminActive=on;$("loginBtn").hidden=on;$("adminTools").hidden=!on;
-  if(!on){$("admin").classList.remove("on");$("notif").hidden=true;$("bellBtn").setAttribute("aria-expanded","false");$("adminBtn").textContent="Buka panel panitia"}
-}
-async function loadSeen(){
-  if(!db||!uid)return;
-  try{var sn=await db.doc("data/users/"+uid+"/state").get();lastSeen=+(snapData(sn).lastSeen)||0}catch(e){}
-}
-async function saveSeen(t){
-  lastSeen=t;renderBell();renderRegs();
-  if(!db||!uid)return;
-  try{await db.doc("data/users/"+uid+"/state").set({lastSeen:t})}catch(e){}
-}
-function unreadList(){return regs.filter(function(r){return (r.createdAt||0)>lastSeen})}
-function renderBell(){
-  var u=unreadList().length,b=$("badge");
-  b.hidden=!u;b.textContent=u>9?"9+":String(u);
-  $("bellBtn").setAttribute("aria-label",u?("Notifikasi, "+u+" pendaftar baru"):"Notifikasi, tidak ada pendaftar baru");
-  var L=$("notifList");
-  if(!regs.length){L.innerHTML='<div class="empty-state">Belum ada pendaftar.</div>';return}
-  L.innerHTML=regs.slice(0,8).map(function(r){
-    var nw=(r.createdAt||0)>lastSeen;
-    return '<button class="nitem" type="button" data-detail="'+esc(r.kode)+'"><span class="t">'+(nw?'<span class="udot" aria-label="Baru"></span>':'')+esc(r.namaUmkm)+'</span><span class="m">'+esc(catLabel(r.kategori))+' · '+esc(pkgLabel(r.paket))+' · '+esc(fmtTime(r.createdAt))+'</span></button>';
-  }).join("");
-}
-function startAdmin(){
-  setAdminUI(true);renderFeeTable();firstSnap=true;
-  loadSeen().then(function(){
-    if(!adminActive)return;
-    try{
-      unsub=db.collection("registrations").onSnapshot(function(snap){
-        var all=[];
-        snap.docs.forEach(function(d){var e=snapData(d).entries||{};Object.keys(e).forEach(function(k){all.push(e[k])})});
-        all.sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0)});
-        var prev={};regs.forEach(function(r){prev[r.kode]=1});
-        var fresh=all.filter(function(r){return !prev[r.kode]});
-        regs=all;
-        if(!firstSnap&&fresh.length)toast("Pendaftar baru: "+fresh[0].namaUmkm+(fresh.length>1?" dan "+(fresh.length-1)+" lainnya":""));
-        firstSnap=false;renderRegs();renderBell();
-      },function(){toast("Data pendaftar tidak bisa dimuat.")});
-    }catch(e){}
+/* ---- administrasi ---- */
+var isAdmin=false,regs=[],adminOn=false,unsub=null,fQ="",fCat="",fPkg="";
+function fmtTime(t){return new Date(t||0).toLocaleString("id-ID",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})}
+function waLink(hp){var d=String(hp||"").replace(/\D/g,"");if(d.indexOf("0")===0)d="62"+d.slice(1);return d?("https://wa.me/"+d):""}
+$("fCat").innerHTML='<option value="">Semua kategori</option>'+CATS.map(function(c){return '<option value="'+c.id+'">'+esc(c.label)+'</option>'}).join("");
+$("fPkg").innerHTML='<option value="">Semua lama hari</option>'+PKGS.map(function(c){return '<option value="'+c.id+'">'+esc(c.label)+'</option>'}).join("");
+function filtered(){
+  var q=fQ.trim().toLowerCase();
+  return regs.filter(function(r){
+    if(fCat&&r.kategori!==fCat)return false;
+    if(fPkg&&r.paket!==fPkg)return false;
+    if(!q)return true;
+    return [r.namaUmkm,r.kontak,r.hp,r.kode,r.nib,r.email].join(" ").toLowerCase().indexOf(q)>-1;
   });
 }
-function stopAdmin(){if(unsub){unsub();unsub=null}regs=[];firstSnap=true;renderRegs();setAdminUI(false)}
-
-$("loginBtn").addEventListener("click",function(){$("loginMsg").textContent="";$("loginDlg").showModal()});
-$("loginCancel").addEventListener("click",function(){$("loginDlg").close()});
-$("loginGo").addEventListener("click",async function(){
-  var m=$("loginMsg"),btn=this;
-  if(!(window.claude&&claude.use)){m.textContent="Login panitia hanya tersedia di versi yang dipublikasikan lewat Claude. File ini tidak terhubung ke data pendaftar.";return}
-  btn.disabled=true;m.textContent="Memeriksa akun…";
+function renderStats(){
+  var c={},k={};
+  regs.forEach(function(r){c[r.kategori]=(c[r.kategori]||0)+1;k[r.paket]=(k[r.paket]||0)+1});
+  var h='<div class="stat"><b>'+regs.length+'</b><span>Total pendaftar</span></div>';
+  CATS.forEach(function(x){h+='<div class="stat"><b>'+(c[x.id]||0)+'</b><span>'+esc(x.label)+'</span></div>'});
+  PKGS.forEach(function(x){h+='<div class="stat"><b>'+(k[x.id]||0)+'</b><span>'+esc(x.label)+'</span></div>'});
+  $("stats").innerHTML=h;
+}
+function renderRegs(){
+  var L=filtered(),box=$("regTable");
+  $("regCount").textContent=L.length+" dari "+regs.length+" pendaftar";
+  if(!regs.length){box.innerHTML='<div class="empty-state">Belum ada pendaftar.</div>';return}
+  if(!L.length){box.innerHTML='<div class="empty-state">Tidak ada pendaftar yang cocok dengan pencarian.</div>';return}
+  var h='<table><thead><tr><th>Kode</th><th>Waktu daftar</th><th>UMKM</th><th>Kategori</th><th>Yang dijual</th><th>Lama hari</th><th>Kontak</th><th>NIB</th><th>Foto</th><th>Biaya</th></tr></thead><tbody>';
+  L.forEach(function(r){
+    h+='<tr><td>'+esc(r.kode)+'</td><td>'+esc(fmtTime(r.createdAt))+'</td><td><button class="linkbtn" type="button" data-detail="'+esc(r.kode)+'">'+esc(r.namaUmkm)+'</button></td><td>'+esc(catLabel(r.kategori))+'</td><td>'+esc((r.produk||[]).join(", "))+'</td><td>'+esc(pkgLabel(r.paket))+'</td><td>'+esc(r.kontak)+'<br>'+esc(r.hp)+(r.email?'<br>'+esc(r.email):'')+'</td><td>'+esc(r.nib||"-")+'</td><td>'+(r.fotoCount||0)+'</td><td>'+(typeof r.biaya==="number"?esc(rp(r.biaya)):'Menyusul')+'</td></tr>';
+  });
+  box.innerHTML=h+'</tbody></table>';
+}
+function renderFeeTable(){
+  var h='<thead><tr><th>Kategori</th>'+PKGS.map(function(p){return '<th>'+esc(p.label)+'</th>'}).join("")+'</tr></thead><tbody>';
+  CATS.forEach(function(c){
+    h+='<tr><td><b>'+esc(c.label)+'</b></td>'+PKGS.map(function(p){
+      var v=fees[c.id][p.id];
+      return '<td><input type="text" inputmode="numeric" data-c="'+c.id+'" data-p="'+p.id+'" value="'+(typeof v==="number"?v:"")+'" placeholder="Menyusul" aria-label="Biaya '+esc(c.label)+' '+esc(p.label)+' dalam Rupiah"></td>';
+    }).join("")+'</tr>';
+  });
+  $("feeTable").innerHTML=h+'</tbody>';
+}
+$("saveFees").addEventListener("click",async function(){
+  var nf=emptyFees(),m=$("feeMsg");
+  document.querySelectorAll("#feeTable input").forEach(function(i){
+    var raw=i.value.replace(/\D/g,"");nf[i.dataset.c][i.dataset.p]=raw===""?null:parseInt(raw,10);
+  });
+  try{await db.doc("config/fees").set({fees:nf,updatedAt:Date.now()});fees=nf;m.textContent="Biaya tersimpan.";update()}
+  catch(e){m.textContent="Biaya belum tersimpan. Coba lagi."}
+  setTimeout(function(){m.textContent=""},3000);
+});
+function subscribeRegs(){
+  if(unsub||!db)return;
   try{
-    var u=await claude.use("user");
-    if(!u){m.textContent="Anda belum masuk ke akun Claude. Masuk dulu, lalu coba lagi."}
-    else if(!(await u.canEdit())){m.textContent="Akun ini belum terdaftar sebagai panitia. Minta pemilik halaman menambahkannya sebagai Editor."}
-    else{
-      isAdmin=true;try{uid=await u.id()}catch(_){}
-      if(!db){try{db=await claude.use("db")}catch(_){db=null}}
-      if(!db){m.textContent="Penyimpanan data tidak tersedia di tampilan ini."}
-      else{$("loginDlg").close();startAdmin()}
-    }
-  }catch(e){m.textContent="Gagal memeriksa akun. Coba lagi."}
-  btn.disabled=false;
+    unsub=db.collection("registrations").onSnapshot(function(snap){
+      var all=[];
+      snap.docs.forEach(function(d){var e=snapData(d).entries||{};Object.keys(e).forEach(function(k){all.push(e[k])})});
+      all.sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0)});
+      regs=all;renderStats();renderRegs();
+    },function(){$("regTable").innerHTML='<div class="empty-state">Data pendaftar tidak bisa dimuat. Muat ulang halaman.</div>'});
+  }catch(e){}
+}
+function setAdmin(on){
+  adminOn=on;
+  $("admin").classList.toggle("on",on);
+  $("formView").hidden=on;
+  if(on)$("doneView").hidden=true;
+  $("adminBtn").textContent=on?"Kembali ke formulir":"Administrasi";
+  if(on){renderFeeTable();subscribeRegs();window.scrollTo({top:0,behavior:"smooth"})}
+}
+$("adminBtn").addEventListener("click",function(){setAdmin(!adminOn)});
+$("fQ").addEventListener("input",function(){fQ=this.value;renderRegs()});
+$("fCat").addEventListener("change",function(){fCat=this.value;renderRegs()});
+$("fPkg").addEventListener("change",function(){fPkg=this.value;renderRegs()});
+$("exportBtn").addEventListener("click",async function(){
+  var L=filtered();if(!L.length)return;
+  var q=function(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"'};
+  var head=["Kode","Waktu daftar","Nama UMKM","Kategori","Yang dijual","Lama hari","Kontak person","WhatsApp","Email","NIB","Jumlah foto","Biaya"];
+  var lines=[head.map(q).join(",")].concat(L.map(function(r){
+    return [r.kode,new Date(r.createdAt||0).toISOString(),r.namaUmkm,catLabel(r.kategori),(r.produk||[]).join("; "),pkgLabel(r.paket),r.kontak,r.hp,r.email,r.nib||"",r.fotoCount||0,typeof r.biaya==="number"?r.biaya:"Menyusul"].map(q).join(",");
+  }));
+  try{var dl=await claude.use("downloads");if(dl)await dl.save({filename:"pendaftar-umkm.csv",data:"\ufeff"+lines.join("\r\n")})}catch(e){}
 });
-$("logoutBtn").addEventListener("click",stopAdmin);
-$("bellBtn").addEventListener("click",function(e){
-  e.stopPropagation();var n=$("notif");n.hidden=!n.hidden;this.setAttribute("aria-expanded",String(!n.hidden));
-});
-document.addEventListener("click",function(e){
-  if(!$("notif").hidden&&!e.target.closest(".bellwrap")){$("notif").hidden=true;$("bellBtn").setAttribute("aria-expanded","false")}
-});
-document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!$("notif").hidden){$("notif").hidden=true;$("bellBtn").setAttribute("aria-expanded","false");$("bellBtn").focus()}});
-$("markRead").addEventListener("click",function(){if(regs.length)saveSeen(Math.max.apply(null,regs.map(function(r){return r.createdAt||0})))});
 
 /* detail pendaftar */
-function waLink(hp){var d=String(hp||"").replace(/\D/g,"");if(d.indexOf("0")===0)d="62"+d.slice(1);return d?("https://wa.me/"+d):""}
 async function showDetail(kode){
   var r=regs.filter(function(x){return x.kode===kode})[0];if(!r)return;
-  $("notif").hidden=true;$("bellBtn").setAttribute("aria-expanded","false");
   var wa=waLink(r.hp);
   var rows=[["Kode",r.kode],["Waktu daftar",fmtTime(r.createdAt)],["Kategori",catLabel(r.kategori)],["Yang dijual",(r.produk||[]).join(", ")],["Lama hari",pkgFull(r.paket)],["Kontak person",r.kontak],["NIB",r.nib||"Tidak diisi"],["Email",r.email||"Tidak diisi"],["Biaya",typeof r.biaya==="number"?rp(r.biaya):"Menyusul"]];
   var h='<h2>'+esc(r.namaUmkm)+'</h2><dl>'+rows.map(function(x){return '<dt>'+esc(x[0])+'</dt><dd>'+esc(x[1])+'</dd>'}).join("")+'<dt>WhatsApp</dt><dd>'+esc(r.hp)+(wa?' · <a href="'+esc(wa)+'" target="_blank" rel="noopener">Buka chat</a>':'')+'</dd></dl>';
@@ -718,9 +646,10 @@ async function init(){
       var d=snapData(s);var nf=emptyFees();
       if(d.fees)CATS.forEach(function(c){PKGS.forEach(function(p){var v=d.fees[c.id]&&d.fees[c.id][p.id];if(typeof v==="number")nf[c.id][p.id]=v})});
       fees=nf;update();
-      if(isAdmin&&!document.activeElement.closest("#feeTable"))renderFeeTable();
+      if(isAdmin&&adminOn&&!(document.activeElement&&document.activeElement.closest&&document.activeElement.closest("#feeTable")))renderFeeTable();
     },function(){});
   }catch(e){}
+  if(isAdmin)$("adminBtn").hidden=false;
 }
 function showBanner(t){var b=$("banner");b.textContent=t;b.hidden=false}
 init();
